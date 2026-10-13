@@ -4,17 +4,16 @@
 Android bootstrap (#1).
 
 ## Completed
-- MVP backlog and initial Flutter application.
-- Android Gradle configuration, Kotlin activity, manifests, launch themes and icon.
-- CI checks analysis, tests, and an Android debug APK build.
-- Flutter analysis and widget tests passed in CI.
+- MVP backlog, minimal Flutter app, Android scaffold and CI.
+- Flutter analysis and widget smoke test passed in CI run #38385686452.
+- Pinned Gradle wrapper distribution to 8.14.3 to address Flutter 3.47.7 minimum Gradle 8.14 requirement.
 
 ## Active
-- Issue #1, draft PR #5.
+- Issue #1; draft PR #5.
 
 ## Known problems
-- Android build fails: Flutter 3.47.7 requires Gradle 8.14 or newer; automatic wrapper selected 8.11.1 for AGP 8.9.1.
-- Updating Android Gradle configuration was blocked by repository write tooling.
+- Android debug APK build has not yet passed with pinned Gradle 8.14.3; await CI result.
+- Android wrapper scripts and JAR are not checked in; Flutter CLI currently generates missing wrapper files during build. Consider committing standard generated wrapper files if needed for standalone Gradle builds.
 
 ## Next
-Update AGP to 8.11.1 or set Gradle wrapper to 8.14 or newer. Re-run CI. Merge only after APK build succeeds, then implement #2.
+Inspect CI for PR #5; fix any remaining build errors. Merge only after verification. Then work on pure Dart engine (#2).
