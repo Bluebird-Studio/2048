@@ -141,9 +141,9 @@ class Game2048 {
       return _result(changed: false, scoreGained: 0);
     }
 
+    final spawned = _spawnTile(board: next);
     _board = next;
     _score += gained;
-    final spawned = _spawnTile();
     _updateStatus();
     return _result(
       changed: true,
@@ -205,11 +205,12 @@ class Game2048 {
     return _MergedLine(result, score);
   }
 
-  TileSpawn? _spawnTile() {
+  TileSpawn? _spawnTile({List<List<int>>? board}) {
+    final target = board ?? _board;
     final empty = <TilePosition>[
       for (var row = 0; row < boardSize; row++)
         for (var column = 0; column < boardSize; column++)
-          if (_board[row][column] == 0) TilePosition(row, column),
+          if (target[row][column] == 0) TilePosition(row, column),
     ];
     if (empty.isEmpty) return null;
 
@@ -227,7 +228,7 @@ class Game2048 {
         !empty.contains(spawn.position)) {
       throw StateError('TileSpawnPicker must choose an empty cell and 2 or 4');
     }
-    _board[spawn.position.row][spawn.position.column] = spawn.value;
+    target[spawn.position.row][spawn.position.column] = spawn.value;
     return spawn;
   }
 
