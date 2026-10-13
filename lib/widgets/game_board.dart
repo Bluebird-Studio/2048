@@ -7,6 +7,11 @@ import 'package:flutter/services.dart';
 class GameBoard extends StatelessWidget {
   const GameBoard({super.key, required this.tiles, this.onDirection});
 
+  static const _moveLeft = CustomSemanticsAction(label: 'Move left');
+  static const _moveRight = CustomSemanticsAction(label: 'Move right');
+  static const _moveUp = CustomSemanticsAction(label: 'Move up');
+  static const _moveDown = CustomSemanticsAction(label: 'Move down');
+
   /// Four rows of four tile values; zero represents an empty cell.
   final List<List<int>> tiles;
   final ValueChanged<AxisDirection>? onDirection;
@@ -56,8 +61,16 @@ class GameBoard extends StatelessWidget {
                 },
                 child: Semantics(
                   label: '2048 game board',
-                  hint: 'Swipe or use arrow keys to move',
+                  hint: 'Swipe, use arrow keys, or choose a move action',
                   explicitChildNodes: true,
+                  customSemanticsActions: onDirection == null
+                      ? null
+                      : {
+                          _moveLeft: () => onDirection!(AxisDirection.left),
+                          _moveRight: () => onDirection!(AxisDirection.right),
+                          _moveUp: () => onDirection!(AxisDirection.up),
+                          _moveDown: () => onDirection!(AxisDirection.down),
+                        },
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: theme.colorScheme.surfaceContainerHighest,
