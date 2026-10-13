@@ -80,18 +80,18 @@ class GameBoard extends StatelessWidget {
                       padding: const EdgeInsets.all(8),
                       child: Column(
                         children: [
-                          for (final row in tiles)
+                          for (final (rowIndex, row) in tiles.indexed)
                             Expanded(
                               child: Row(
                                 children: [
-                                  for (final value in row)
+                                  for (final (columnIndex, value) in row.indexed)
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: Semantics(
                                           label: value == 0
-                                              ? 'Empty tile'
-                                              : 'Tile $value',
+                                              ? 'Empty tile, row ${rowIndex + 1}, column ${columnIndex + 1}'
+                                              : 'Tile $value, row ${rowIndex + 1}, column ${columnIndex + 1}',
                                           child: ExcludeSemantics(
                                             child: DecoratedBox(
                                               decoration: BoxDecoration(
