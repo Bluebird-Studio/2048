@@ -49,6 +49,30 @@ int sumTiles(List<List<int>> board) =>
     board.expand((row) => row).fold(0, (total, value) => total + value);
 
 void main() {
+  group('failed spawn is atomic', () {
+    test('invalid picker result does not change the board or score', () {
+      final initial = <List<int>>[
+        [0, 2, 2, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+      ];
+      final game = Game2048.fromBoard(
+        initial,
+        score: 40,
+        spawnPicker: (_) => const TileSpawn(TilePosition(0, 0), 8),
+      );
+      final before = game.board;
+
+      expect(() => game.move(MoveDirection.left), throwsStateError);
+      // A rejected injected spawn must not leave an unreported move behind.
+      expect(game.board, before);
+      expect(game.score, 40);
+      expect(game.hasWon, isFalse);
+      expect(game.isGameOver, isFalse);
+    });
+  });
+
   group('exhaustive 2048 line invariants', () {
     // 4^4 = 256 lines, each tested in all four directions.
     const alphabet = [0, 2, 4, 8];
