@@ -38,6 +38,26 @@ void main() {
     expect(directions, <AxisDirection>[AxisDirection.right]);
   });
 
+  testWidgets('vertical swipe reports its direction', (tester) async {
+    final directions = <AxisDirection>[];
+    await tester.pumpWidget(board(onDirection: directions.add));
+
+    await tester.drag(find.byType(GameBoard), const Offset(0, -100));
+    await tester.pump();
+
+    expect(directions, <AxisDirection>[AxisDirection.up]);
+  });
+
+  testWidgets('short drag does not count as a move', (tester) async {
+    final directions = <AxisDirection>[];
+    await tester.pumpWidget(board(onDirection: directions.add));
+
+    await tester.drag(find.byType(GameBoard), const Offset(10, 0));
+    await tester.pump();
+
+    expect(directions, isEmpty);
+  });
+
   testWidgets('arrow keys report directions only on key down', (tester) async {
     final directions = <AxisDirection>[];
     await tester.pumpWidget(board(onDirection: directions.add));
@@ -53,14 +73,20 @@ void main() {
     );
   });
 
-  testWidgets('tile values have readable accessibility labels',
+  testWidgets('all tiles have unique, position-aware accessibility labels',
       (tester) async {
     final semantics = tester.ensureSemantics();
     addTearDown(semantics.dispose);
     await tester.pumpWidget(board());
 
     expect(find.bySemanticsLabel('2048 game board'), findsOneWidget);
-    expect(find.bySemanticsLabel('Tile 2'), findsOneWidget);
-    expect(find.bySemanticsLabel('Empty tile'), findsNWidgets(15));
+    for (var row = 1; row <= 4; row++) {
+      for (var column = 1; column <= 4; column++) {
+        final label = row == 1 && column == 1
+            ? 'Tile 2, row 1, column 1'
+            : 'Empty tile, row $row, column $column';
+        expect(find.bySemanticsLabel(label), findsOneWidget);
+      }
+    }
   });
 }
