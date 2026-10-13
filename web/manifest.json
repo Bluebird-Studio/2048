@@ -1,0 +1,10 @@
+{
+  "name": "2048 · Bluebird Studio",
+  "short_name": "2048",
+  "description": "A browser-playable 2048 puzzle game",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#faf8ef",
+  "theme_color": "#bbada0",
+  "orientation": "any"
+}

@@ -23,3 +23,12 @@ jobs:
           path: build/app/outputs/flutter-apk/app-debug.apk
           if-no-files-found: error
           retention-days: 7
+      - name: Build browser version
+        run: flutter build web --release --base-href /2048/
+      - name: Upload browser build
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2048-web-static
+          path: build/web
+          if-no-files-found: error
+          retention-days: 7
