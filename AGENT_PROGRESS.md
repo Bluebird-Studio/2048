@@ -1,18 +1,16 @@
-# Agent progress
+# 2048 integration status
 
-## Milestone
-Android bootstrap (#1).
+## Integrated work
+- Bootstrap: PR #5 merged on 2026-10-13; successful CI verified analysis, tests, debug APK build.
+- Game engine: existing `feat/2-deterministic-game-engine` branch preserved, separate PR #7.
+- UI: existing PR #6 responsive board and widget tests preserved and imported with corrected semantics import.
+- Integrated application: 4x4 gameplay, score and persisted best, swipe/keyboard/buttons, restart and win/loss feedback.
+- GitHub Actions: analyzer, tests, APK build and uploaded APK artifact.
 
-## Completed
-- Flutter app, Android scaffold and CI added in PR #5.
-- Gradle pinned to 8.14.3; Android Gradle Plugin upgraded to 8.11.1.
-- Flutter analysis and widget test passed on prior CI runs.
+## Ship gate
+This integration branch requires **passing PR CI**, including an APK upload, before merging.
+Once PR #7 merges, this UI integration can merge and replace obsolete PR #6.
+Do not report the project shipped before CI on main passes and exposes the APK artifact.
 
-## Active
-- Issue #1, draft PR #5.
-
-## Known problems
-- Android APK build with updated AGP is not yet verified.
-
-## Next
-Review CI run #38422516393, fix failures, and merge PR #5 only after verification. Then implement game engine (#2).
+## Ownership
+Avoid editing this integration branch concurrently. Product Lead should integrate verified PRs.
