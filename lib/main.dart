@@ -115,7 +115,11 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final boardSize = math.min(440.0, MediaQuery.sizeOf(context).width - 32);
+    final screen = MediaQuery.sizeOf(context);
+    final boardSize = math.min(
+      440.0,
+      math.min(screen.width - 32, math.max(180.0, screen.height - 320)),
+    );
     final message = _game.isGameOver
         ? 'No moves left. Start a new game.'
         : _game.hasWon
@@ -135,6 +139,7 @@ class _GameScreenState extends State<GameScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 520),
