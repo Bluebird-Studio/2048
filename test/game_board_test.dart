@@ -76,7 +76,6 @@ void main() {
   testWidgets('all tiles have unique, position-aware accessibility labels',
       (tester) async {
     final semantics = tester.ensureSemantics();
-    addTearDown(semantics.dispose);
     await tester.pumpWidget(board());
 
     expect(find.bySemanticsLabel('2048 game board'), findsOneWidget);
@@ -88,5 +87,6 @@ void main() {
         expect(find.bySemanticsLabel(label), findsOneWidget);
       }
     }
+    semantics.dispose();
   });
 }
