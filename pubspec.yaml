@@ -1,5 +1,5 @@
 name: game_2048
-description: A minimal Flutter 2048 game.
+description: A playable, offline Flutter 2048 game.
 publish_to: none
 version: 0.1.0+1
 environment:
@@ -7,6 +7,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
